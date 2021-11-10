@@ -9,7 +9,13 @@ import Foundation
 
 class PostViewModel: NSObject {
     private var postService: PostService?
-    private var posts: Array<Post>?
+    private var posts: Array<Post>? {
+        didSet {
+            self.bindPostViewModelToController()
+        }
+    }
+    
+    public var bindPostViewModelToController: (() -> ()) = {}
     
     override init() {
         super.init()
@@ -20,10 +26,12 @@ class PostViewModel: NSObject {
     
     private func callGetPosts() {
         postService?.apiToGetPosts { (posts, error) in
-            if error != nil {
-                self.posts = posts
-            }
+            if error == nil {  self.posts = posts }
         }
+    }
+    
+    public func getPosts() -> Array<Post>? {
+        return posts
     }
     
 }

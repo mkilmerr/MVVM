@@ -17,7 +17,7 @@ import Foundation
 //}
 
 
-struct Quotes: Decodable {
+struct Post: Decodable {
     let userId:Int
     let id: Int
     let title: String

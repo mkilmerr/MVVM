@@ -10,7 +10,7 @@ import Foundation
 class PostService {
     private let postsPath = "https://jsonplaceholder.typicode.com/posts"
     
-    public func apiToGetPosts(completion: @escaping([Post]?, Error?) -> ()) {
+    public func apiToGetPosts(completion: @escaping(Array<Post>?, Error?) -> ()) {
         guard let url = URL(string: postsPath) else { return }
         
         URLSession.shared.dataTask(with: url) { (data, response ,error) in
@@ -19,7 +19,7 @@ class PostService {
             guard let dataReceive = data else{ return }
             
             do {
-                let posts = try JSONDecoder().decode([Post].self, from: dataReceive)
+                let posts = try JSONDecoder().decode(Array<Post>.self, from: dataReceive)
                 completion(posts, nil)
             } catch {
                 completion(nil, error)
